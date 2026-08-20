@@ -338,6 +338,17 @@ form.addEventListener("submit", async e => {
       "Thank you! Your MAARTE pre-order has been submitted successfully.";
 
     submitBtn.textContent = "SUBMITTED ✓";
+    const instagramSuccess =
+  document.getElementById("instagramSuccess");
+
+if (instagramSuccess) {
+  instagramSuccess.classList.remove("hidden");
+
+  instagramSuccess.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
 
   } catch (error) {
     console.error(error);
