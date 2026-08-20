@@ -2,7 +2,7 @@ const PSGC_API = "https://psgc.cloud/api/v2";
 
 // Set this to your secure serverless endpoint when you connect the form to Airtable.
 // Example: "https://maarte-orders.your-domain.workers.dev/submit"
-const SUBMIT_ENDPOINT = "";
+const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbxvwfcOXo4D55MclN8SCqc-hQi0ogOik9hIWliDOByEbBeYsrfiChd8nDVHDNH3NIqbHw/exec";
 
 const PRICES = { tote:1599, pins:499, caps:799 };
 const SHIPPING = { metro:300, provincial:350 };
@@ -326,17 +326,13 @@ function buildSubmission(){
   };
 }
 
-form.addEventListener("submit",async e=>{
+form.addEventListener("submit", async e => {
   e.preventDefault();
   updateSummary();
 
-  if(!validate()){
-    formStatus.textContent = "Please complete all required fields and payment details.";
-    return;
-  }
-
-  if(!SUBMIT_ENDPOINT){
-    formStatus.textContent = "The form is complete, but the secure Airtable submission endpoint still needs to be added in script.js.";
+  if (!validate()) {
+    formStatus.textContent =
+      "Please complete all required fields and payment details.";
     return;
   }
 
@@ -344,23 +340,33 @@ form.addEventListener("submit",async e=>{
   submitBtn.textContent = "SUBMITTING...";
   formStatus.textContent = "";
 
-  try{
-    const fd = new FormData();
-    fd.append("order",JSON.stringify(buildSubmission()));
-    fd.append("paymentScreenshot",paymentScreenshot.files[0]);
+  try {
+    const orderData = buildSubmission();
 
-    const response = await fetch(SUBMIT_ENDPOINT,{method:"POST",body:fd});
-    if(!response.ok) throw new Error("Submission failed");
+    await fetch(SUBMIT_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(orderData)
+    });
 
-    formStatus.textContent = "Thank you! Your MAARTE pre-order has been submitted successfully.";
+    formStatus.textContent =
+      "Thank you! Your MAARTE pre-order has been submitted successfully.";
+
     submitBtn.textContent = "SUBMITTED ✓";
-  }catch(err){
-    formStatus.textContent = "We couldn't submit your order. Please try again.";
+
+  } catch (error) {
+    console.error(error);
+
+    formStatus.textContent =
+      "We couldn't submit your order. Please try again.";
+
     submitBtn.disabled = false;
     submitBtn.textContent = "SUBMIT PRE-ORDER";
   }
 });
-
 loadRegions();
 updatePaymentUI();
 updateSummary();
