@@ -81,7 +81,51 @@ select:disabled{background:#f5f0eb;color:#8b8079}
 .invalid{border-color:#b42318!important;box-shadow:0 0 0 4px rgba(180,35,24,.08)!important}
 footer{text-align:center;padding:4px 20px 34px;color:var(--brown)}
 footer p{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:20px}
-@media(max-width:620px){
+@media(max-width:620px){.instagram-success {
+  margin-top: 24px;
+  padding: 24px 20px;
+  background: #FFFDF9;
+  border: 1px solid #E8A0A8;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.instagram-success h3 {
+  margin: 0 0 12px;
+  color: #2C1810;
+}
+
+.instagram-success p {
+  color: #5C3527;
+  line-height: 1.6;
+}
+
+.instagram-dm-btn {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 18px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  background: #2C1810;
+  color: #FFFDF9;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+}
+
+.instagram-dm-btn:hover {
+  background: #3D2318;
+}
+
+.ig-note {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.hidden {
+  display: none;
+}
   .hero{min-height:190px}.logo-text{font-size:45px}.page-shell{width:min(100% - 20px,760px);margin-top:-20px}
   .intro,.section{padding:19px}.grid.two{grid-template-columns:1fr}.product-card{grid-template-columns:1fr}.product-image{max-height:290px}
 }
