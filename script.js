@@ -20,8 +20,6 @@ const paymentDetails = $("paymentDetails");
 const gcashDetails = $("gcashDetails");
 const bankDetails = $("bankDetails");
 const paypalDetails = $("paypalDetails");
-const paymentScreenshot = $("paymentScreenshot");
-const screenshotPreview = $("screenshotPreview");
 const orderSummary = $("orderSummary");
 const summaryTotal = $("summaryTotal");
 const formStatus = $("formStatus");
@@ -190,7 +188,6 @@ function updateSummary(){
   const c = calculateOrder();
   const paymentMethod = selected("paymentMethod");
   const fullName = [value("firstName"),value("surname")].filter(Boolean).join(" ");
-  const screenshotName = paymentScreenshot.files?.[0]?.name || "—";
 
   let html = `
     <div class="summary-group">
@@ -232,7 +229,6 @@ function updateSummary(){
       <h3>PAYMENT</h3>
       <div class="summary-row"><span>Payment Method</span><strong>${paymentMethod || "—"}</strong></div>
       <div class="summary-row"><span>Reference Number</span><strong>${value("paymentReference") || "—"}</strong></div>
-      <div class="summary-row"><span>Payment Screenshot</span><strong>${screenshotName}</strong></div>
     </div>`;
 
   orderSummary.innerHTML = html;
@@ -254,20 +250,6 @@ document.querySelectorAll('input[name="paymentMethod"]').forEach(el=>el.addEvent
 form.querySelectorAll('input:not([type="radio"]):not([type="file"])').forEach(el=>el.addEventListener("input",updateSummary));
 barangay.addEventListener("change",updateSummary);
 
-paymentScreenshot.addEventListener("change",()=>{
-  screenshotPreview.innerHTML = "";
-  const file = paymentScreenshot.files?.[0];
-  if(file){
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-    img.alt = "Payment screenshot preview";
-    screenshotPreview.appendChild(img);
-    screenshotPreview.classList.remove("hidden");
-  }else{
-    screenshotPreview.classList.add("hidden");
-  }
-  updateSummary();
-});
 
 function validate(){
   let valid = true;
