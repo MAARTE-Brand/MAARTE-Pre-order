@@ -1062,7 +1062,7 @@ function showInstagramSuccess() {
       <button
         type="button"
         id="copyOrderBtn"
-        class="instagram-action-btn"
+        class="instagram-dm-btn copy-order-btn"
       >
         COPY ORDER SUMMARY
       </button>
